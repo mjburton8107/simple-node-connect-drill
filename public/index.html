@@ -20,8 +20,8 @@
     </form>
     <button class = "delete" ng-click ="deleteChats()"> Armeggeddon </button>
       <div class = "messages">
-      <div class = "message" ng-repeat = "chat in chats">
-        <span class = "screenname">{{chat.screenname}}</span>
+      <div class = "message" ng-repeat = "chat in chats track by $index">
+        <span class = "screenname">{{ screenname}}</span>
         <span class = "message">{{chat.message}} </span>
       </div>
       </div>

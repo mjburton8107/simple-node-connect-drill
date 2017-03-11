@@ -5,27 +5,21 @@ angular.module("myChats").controller("mainCtrl", function($scope, mainSrvc, $int
   //Dummy data to show what the chat messages should look like
   // to work with the frontend
   // TODO Remove once server is integrated;
-  $scope.chats = [{
-    screenname:"Mr Wiggles",
-    message:"I canz sit still"
-  },{
-    screenname:"Mr Loud",
-    message:"I canz use my inside voice"
-  },{
-    screenname:"Mr Author",
-    message:"I canz write childrenz books"
-  }]
 
   $scope.addChat = function(chatmessage){
-    // TODO Call service to add chats
+     mainSrvc.addChats(chatmessage).then(function(response){
+      $scope.chats.push(response.message)
+    });
   }
 
   function getChats(){
-    // TODO Tell service to get chats
+    mainSrvc.getChats().then(function(response) {
+      $scope.chats = response;
+    })
   }
 
   $scope.deleteChats = function(){
-    // TODO Tell service to delete all chats
+    mainSrvc.deleteChats();
   }
 
   // Gets initial chats
@@ -33,5 +27,12 @@ angular.module("myChats").controller("mainCtrl", function($scope, mainSrvc, $int
 
   // Set up repeating call to get chats
   $interval(getChats, 3000);
+
+  $scope.setScreenname = function(name){
+    mainSrvc.setScreenname(name).then(function(response){
+      console.log('this is response.data.screenname', response.data.screenname)
+      $scope.screenname = response.data.screenname
+    })
+  };
 
 })

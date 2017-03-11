@@ -10,9 +10,15 @@ var port = 3737;
 app.use(bodyParser.json());
 
 // TODO Initialize Session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+}))
 
 app.post("/api/screenname", function(req, res){
-  // TODO Save screenname to session
+  req.session.screenname = req.body.screenname;
+  res.send(req.session.screenname);
 })
 
 app.get("/api/chats", chatCtrl.getChats);
@@ -24,3 +30,5 @@ app.delete("/api/chats", chatCtrl.deleteChats);
 app.listen(port, function(){
   console.log("Listeing on port ", port, " INSERT-WITTY-STATEMENT-HERE");
 });
+
+app.use(express.static('public'));

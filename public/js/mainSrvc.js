@@ -1,14 +1,39 @@
 angular.module("myChats").service("mainSrvc", function($http){
 
+  this.setScreenname = function(name){
+    return $http({
+      method: 'POST',
+      url: '/api/screenname',
+      data: {screenname : name}
+    }).then(function(response){
+      console.log('this is response', response.config);
+      return response.config;
+    })
+  }
+
   this.getChats = function(){
-    //TODO Call server to get the chats
+    return $http({
+      method: 'GET',
+      url: '/api/chats'
+    }).then(function(response) {
+      return response.data;
+    })
   }
 
   this.addChats = function(chat){
-    //TODO Call server to add to chats
+    return $http({
+      method: 'POST',
+      url: '/api/chats',
+      data: chat
+    }).then(function(response){
+      return response.data;
+    })
   }
 
   this.deleteChats = function(){
-    //TODO Call server to whipe all the chats
+    return $http({
+      method: 'DELETE',
+      url: '/api/chats'
+    })
   }
 });
